@@ -4,7 +4,6 @@
     {
       self,
       nixpkgs,
-      systems ? [ ],
       ...
     }@inputs:
     let
@@ -20,7 +19,8 @@
       packages = forAllSystems (
         system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system}
       );
-      # nixosModules = import ./nixos-modules;
+      overlays.default = import ./overlay.nix;
+      nixosModules = import ./nixos-modules;
       # homeModules = import ./home-modules;
       # darwinModules = import ./darwin-modules;
       # flakeModules = import ./flake-modules;
