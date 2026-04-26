@@ -1,6 +1,9 @@
-{ self, ... }:
+{ modulesPath, ... }:
+let
+  overlays = import (modulesPath + "/overlays.nix");
+in
 {
   nixpkgs.overlays = [
-    self.overlays.default
+    overlays
   ];
 }

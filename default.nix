@@ -15,7 +15,7 @@
   # The `lib`, `overlays`, `nixosModules`, `homeModules`,
   # `darwinModules` and `flakeModules` names are special
   lib = import ./lib { inherit pkgs; }; # functions
-  # nixosModules = import ./nixos-modules; # NixOS modules
+  nixosModules = import ./nixos-modules; # NixOS modules
   # homeModules = { }; # Home Manager modules
   # darwinModules = { }; # nix-darwin modules
   # flakeModules = { }; # flake-parts modules
