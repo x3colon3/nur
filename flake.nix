@@ -7,7 +7,12 @@
       ...
     }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs (inputs.systems or nixpkgs.lib.systems.flakeExposed);
+      systems =
+        if builtins.isList (inputs.systems or null) then
+          inputs.systems
+        else
+          inputs.systems or nixpkgs.lib.systems.flakeExposed;
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
       legacyPackages = forAllSystems (
