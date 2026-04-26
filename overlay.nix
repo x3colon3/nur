@@ -2,7 +2,7 @@
 # case where you don't want to add the whole NUR namespace to your
 # configuration.
 
-final: prev:
+self: final: prev:
 let
   isReserved =
     n:
@@ -16,7 +16,10 @@ let
     name = n;
     value = v;
   };
-  nurAttrs = import ./default.nix { pkgs = final; };
+  nurAttrs = import ./default.nix {
+    pkgs = final;
+    inherit self;
+  };
 
 in
 builtins.listToAttrs (

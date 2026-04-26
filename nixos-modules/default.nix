@@ -1,3 +1,4 @@
+{ self }:
 {
-  apply-overlay = ./apply-overlay;
+  apply-overlay = import ./apply-overlay { inherit self; };
 }
