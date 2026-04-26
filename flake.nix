@@ -1,5 +1,5 @@
 {
-  systems = {
+  inputs.systems = {
     url = "path:./systems.flake.nix";
     flake = false;
   };
@@ -14,7 +14,7 @@
     let
       s = import systems;
       forAllSystems = nixpkgs.lib.genAttrs (
-        if builtins.isList s then s else nixpkgs.lib.systems.flakeExposed
+        if builtins.length s > 0 then s else nixpkgs.lib.systems.flakeExposed
       );
     in
     {
