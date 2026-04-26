@@ -1,18 +1,21 @@
 {
+  systems = {
+    url = "path:./systems.flake.nix";
+    flake = false;
+  };
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   outputs =
     {
       self,
       nixpkgs,
+      systems,
       ...
-    }@inputs:
+    }:
     let
-      systems =
-        if builtins.isList (inputs.systems or null) then
-          inputs.systems
-        else
-          inputs.systems or nixpkgs.lib.systems.flakeExposed;
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+      s = import systems;
+      forAllSystems = nixpkgs.lib.genAttrs (
+        if builtins.isList s then s else nixpkgs.lib.systems.flakeExposed
+      );
     in
     {
       legacyPackages = forAllSystems (
